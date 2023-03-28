@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Employer extends AbstractEntity {
@@ -28,6 +29,6 @@ public class Employer extends AbstractEntity {
 
     @OneToMany
     @JoinColumn
-    private ArrayList<Job> jobs;
+    private List<Job> jobs = new ArrayList<>();
 
 }
