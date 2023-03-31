@@ -18,9 +18,9 @@ DROP TABLE job
 
 -- Part 4: Test it with SQL
 
-SELECT
+SELECT *
 FROM skill
-LEFT JOIN job_skills ON skill_id = job_skills.skill_id
-WHERE job_skills.job_id IS NOT NULL
+LEFT JOIN job_skills ON skills_id = job_skills.skills_id
+WHERE job_skills.jobs_id IS NOT NULL
 ORDER BY name ASC
 

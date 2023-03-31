@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by LaunchCode
@@ -35,7 +36,7 @@ public class HomeController {
     public String index(Model model) {
 
         model.addAttribute("title", "My Jobs");
-
+        model.addAttribute("jobs", jobRepository.findAll());
         return "index";
     }
 
@@ -59,16 +60,26 @@ public class HomeController {
 
         model.addAttribute("employer", employerId);
         model.addAttribute("skill", skills);
-        // TODO: make this thing work right//
-//        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-//        newJob.setSkills(skillObjs);
-//
-//        jobRepository.save(newJob);
+
+        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+        newJob.setSkills(skillObjs);
+
+        Optional employerName = employerRepository.findById(employerId);
+        Employer employerObj = (Employer) employerName.get();
+        newJob.setEmployer(employerObj);
+
+        jobRepository.save(newJob);
+
         return "redirect:";
     }
 
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
+
+        Optional jobName = jobRepository.findById(jobId);
+        Job jobObj = (Job) jobName.get();
+        model.addAttribute("title", "Job Details");
+        model.addAttribute("job", jobObj);
 
         return "view";
     }
